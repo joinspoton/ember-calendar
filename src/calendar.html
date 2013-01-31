@@ -1,0 +1,11 @@
+<script type='text/x-handlebars' data-template-name='ember-calendar'>
+  <div class='ember-calendar-head'>
+    <div class='ember-calendar-head-previous'><button {{bindAttr loadPreviousWeek}}>&laquo;</button></div>
+    <div class='ember-calendar-head-days'>
+      {{#each controller.days}}
+        <div class="recommend-calendar-head-day"></div>
+      {{/each}}
+    </div>
+    <div class='ember-calendar-head-next'><button {{bindAttr loadNextWeek}}>&raquo;</button></div>
+  </div>
+</script>
