@@ -14,4 +14,6 @@ App.ApplicationView = Ember.View.extend({
 ///////////////////////////////////////////////////////////////////////////////
 // Controller
 ///////////////////////////////////////////////////////////////////////////////
-App.CalendarController = Ember.Calendar.CalendarController.extend()
+App.CalendarController = Ember.Calendar.CalendarController.extend({
+    content: []
+})
