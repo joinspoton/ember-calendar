@@ -8,8 +8,7 @@ Ember.Calendar = Ember.Namespace.create()
 // Controller
 ///////////////////////////////////////////////////////////////////////////////
 Ember.Calendar.CalendarController = Ember.ArrayController.extend({
-    initialDate: 'today'
-  , startOfWeek: 0
+    startOfWeek: 0
   , headingDateFormat: 'ddd MMM D'
   , headingTimeFormat: 'h a'
   , headingTimeRangeStart: 0
@@ -96,8 +95,8 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
     }
   
   , init: function () {
+      this._super()
       this.set('week', moment(this.get('initialDate')).subtract('days', (moment(this.get('initialDate')).day() + 7 - this.get('startOfWeek')) % 7))
-      _super.init()
     }
 })
 
@@ -106,17 +105,27 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
 // Views
 ///////////////////////////////////////////////////////////////////////////////
 Ember.Calendar.CalendarView = Ember.View.extend({
-    classNames: ['ember-calendar']
+    templateName: 'ember-calendar'
+  , classNames: ['ember-calendar']
 })
 
 Ember.Calendar.HeadingDatesView = Ember.ContainerView.extend({
     classNames: ['ember-calendar-head-dates']
-  , childViews: function () {
+  , updateChildViews: function () {
       var self = this
-      return this.get('dates').map(function (date) {
-        return Ember.create(self.get('parentView.controller.headingDateViewClass'), { date: date })
-      })
-    }.property('dates')
+      
+      // hacky way of updating DOM after removing childViews (http://stackoverflow.com/questions/14538736/how-to-clear-all-childviews-from-containerview)
+      this.removeAllChildren()
+      $('#' + this.get('elementId')).html('')
+      
+      this.get('childViews').pushObjects(this.get('dates').map(function (date) {
+        return Ember.get(self.get('parentView.controller.headingDateViewClass')).create({ date: date })
+      }))
+    }.observes('dates')
+  , init: function () {
+      this._super()
+      this.updateChildViews()
+    }
 })
 
 Ember.Calendar.HeadingDateView = Ember.View.extend({
@@ -129,38 +138,67 @@ Ember.Calendar.HeadingDateView = Ember.View.extend({
 
 Ember.Calendar.HeadingTimesView = Ember.ContainerView.extend({
     classNames: ['ember-calendar-head-times']
-  , childViews: function () {
+  , updateChildViews: function () {
       var self = this
-      return this.get('times').map(function (time) {
-        return Ember.create(self.get('parentView.controller.headingDateViewClass'), { time: time })
-      })
-    }.property('times')
+      
+      // hacky way of updating DOM after removing childViews (http://stackoverflow.com/questions/14538736/how-to-clear-all-childviews-from-containerview)
+      this.removeAllChildren()
+      $('#' + this.get('elementId')).html('')
+      
+      this.get('childViews').pushObjects(this.get('times').map(function (time) {
+        return Ember.get(self.get('parentView.controller.headingTimeViewClass')).create({ time: time })
+      }))
+    }.observes('times')
+  , init: function () {
+      this._super()
+      this.updateChildViews()
+    }
 })
 
 Ember.Calendar.HeadingTimeView = Ember.View.extend({
     templateName: 'ember-calendar-head-time'
   , classNames: ['ember-calendar-head-time']
   , timeString: function () {
-      return this.get('time').format(this.get('parentView.parentView.controller.headingTimeFormat'))
+      return moment().startOf('day').add('milliseconds', this.get('time')).format(this.get('parentView.parentView.controller.headingTimeFormat'))
     }.property('time')
 })
 
 Ember.Calendar.DaysView = Ember.ContainerView.extend({
     classNames: ['ember-calendar-days']
-  , childViews: function () {
-      days.forEach(function (events) {
-        return Ember.create(self.get('parentView.controller.dayViewClass', { events: events }))
-      })
-    }.property('days')
+  , updateChildViews: function () {
+      var self = this
+      
+      // hacky way of updating DOM after removing childViews (http://stackoverflow.com/questions/14538736/how-to-clear-all-childviews-from-containerview)
+      this.removeAllChildren()
+      $('#' + this.get('elementId')).html('')
+      
+      this.get('childViews').pushObjects(this.get('days').map(function (events) {
+        return Ember.get(self.get('parentView.controller.dayViewClass')).create({ events: events })
+      }))
+    }.observes('days')
+  , init: function () {
+      this._super()
+      this.updateChildViews()
+    }
 })
 
 Ember.Calendar.DayView = Ember.ContainerView.extend({
     classNames: ['ember-calendar-day']
-  , childViews: function () {
-      events.forEach(function (event) {
-        return Ember.create(self.get('parentView.parentView.controller.eventViewClass', { event: event }))
-      })
-    }.property('events')
+  , updateChildViews: function () {
+      var self = this
+      
+      // hacky way of updating DOM after removing childViews (http://stackoverflow.com/questions/14538736/how-to-clear-all-childviews-from-containerview)
+      this.removeAllChildren()
+      $('#' + this.get('elementId')).html('')
+      
+      this.get('childViews').pushObjects(this.get('events').map(function (event) {
+        return Ember.get(self.get('parentView.parentView.controller.eventViewClass')).create({ event: event })
+      }))
+    }.observes('events')
+  , init: function () {
+      this._super()
+      this.updateChildViews()
+    }
 })
 
 Ember.Calendar.EventView = Ember.View.extend({
