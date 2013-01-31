@@ -167,13 +167,15 @@ Ember.Calendar.EventView = Ember.View.extend({
     classNames: ['ember-calendar-event']
   , attributeBindings: ['style']
   , style: function () {
-      var start = moment(this.get('context.start'))
-        , end = moment(this.get('context.end'))
-        , rangeStart: start.clone().startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.headingTimeRangeStart')
-        , rangeEnd: start.clone().startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.headingTimeRangeEnd')
+      if (!this.get('event')) return ''
+      
+      var start = moment(this.get('event.start'))
+        , end = moment(this.get('event.end'))
+        , rangeStart: start.clone().startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.parentView.parentView.headingTimeRangeStart')
+        , rangeEnd: start.clone().startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.parentView.parentView.headingTimeRangeEnd')
       
       return 'top: ' + (start - rangeStart) / (rangeEnd - rangeStart) + '%; height: ' + (end - start) / (rangeEnd - rangeStart) + '%;'
-    }
+    }.property('event', 'event.start', 'event.end')
   , nameString: function () {
       if (!this.get('event')) return ''
       return this.get('event.name')
