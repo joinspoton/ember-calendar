@@ -1,25 +1,21 @@
 <script type='text/x-handlebars' data-template-name='ember-calendar'>
   <div class='ember-calendar-head'>
     <div class='ember-calendar-head-previous'><button {{action loadPreviousWeek target='controller'}}>&laquo;</button></div>
-    <div class='ember-calendar-head-days'>
-      {{#each controller.days}}
-        {{#view Ember.Calendar.HeadingDayView}}{{dateString}}{{/view}}
-      {{/each}}
-    </div>
+    {{view Ember.Calendar.HeadingDatesView datesBinding='controller.dates'}}
     <div class='ember-calendar-head-next'><button {{action loadNextWeek target='controller'}}>&raquo;</button></div>
   </div>
   <div class='ember-calendar-body'>
-    <div class='ember-calendar-head-times'>
-      {{#each controller.times}}
-        {{#view Ember.Calendar.HeadingTimeView}}{{timeString}}{{/view}}
-      {{/each}}
-    </div>
-    <div class='ember-calendar-events'>
-      {{#each controller.events}}
-        {{view Ember.Calendar.DayView}}
-      {{/each}}
-    </div>
+    {{view Ember.Calendar.HeadingTimesView timesBinding='controller.times'}}
+    {{view Ember.Calendar.DaysView daysBinding='controller.days'}}
   </div>
+</script>
+
+<script type='text/x-handlebars' data-template-name='ember-calendar-head-date'>
+  {{dateString}}
+</script>
+
+<script type='text/x-handlebars' data-template-name='ember-calendar-head-date'>
+  {{timeString}}
 </script>
 
 <script type='text/x-handlebars' data-template-name='ember-calendar-event'>
