@@ -1,5 +1,10 @@
-/* The majority of these selectors + properties are required.
-   However, you can customize them as you wish. */
+section > h3 {
+  margin-top: 25px;
+}
+
+section > h3:nth-of-type(1) {
+  margin-top: 0px;
+}
 
 .ember-calendar {
   border: 1px solid #ddd;
