@@ -9,6 +9,7 @@ Ember.Calendar = Ember.Namespace.create()
 ///////////////////////////////////////////////////////////////////////////////
 Ember.Calendar.CalendarController = Ember.ArrayController.extend({
     startOfWeek: 0
+  , startOfDay: 8
   , headingDateFormat: 'ddd MMM D'
   , headingTimeFormat: 'h a'
   , headingTimeRangeStart: 0
@@ -39,7 +40,7 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
       var times = []
         , i
       
-      for (i = this.get('headingTimeRangeStart'); i <= this.get('headingTimeRangeEnd'); i++)
+      for (i = this.get('headingTimeRangeStart'); i < this.get('headingTimeRangeEnd'); i++)
         times.push(1000 * 60 * 60 * i)
       
       return times
@@ -49,8 +50,9 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
       if (!this.get('week'))
         return []
       
-      var days = []
+      var days = [[], [], [], [], [], [], []]
         , dates = this.get('dates')
+        , self = this
       
       this.get('content').forEach(function (event) {
         var start = moment(event.start).clone()
@@ -74,7 +76,7 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
           if (object.end > end)
             object.end = end.clone()
           
-          day = object.start.clone().startOf('day').diff(this.get('week'), 'days')
+          day = object.start.clone().startOf('day').diff(self.get('week'), 'days')
           if (day >= 0 && day <= 6)
             days[day].push(object)
           
@@ -107,6 +109,13 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
 Ember.Calendar.CalendarView = Ember.View.extend({
     templateName: 'ember-calendar'
   , classNames: ['ember-calendar']
+  , didInsertElement: function () {
+      var container = $('#' + this.get('elementId') + ' > .ember-calendar-container')
+        , body = $('#' + this.get('elementId') + ' > .ember-calendar-container > .ember-calendar-body')
+        , start = (this.get('controller.startOfDay') - this.get('controller.headingTimeRangeStart')) / (this.get('controller.headingTimeRangeEnd') - this.get('controller.headingTimeRangeStart'))
+      
+      container.scrollTop(start * body.height())
+    }
 })
 
 Ember.Calendar.HeadingDatesView = Ember.ContainerView.extend({
@@ -173,7 +182,7 @@ Ember.Calendar.DaysView = Ember.ContainerView.extend({
       $('#' + this.get('elementId')).html('')
       
       this.get('childViews').pushObjects(this.get('days').map(function (events) {
-        return Ember.get(self.get('parentView.controller.dayViewClass')).create({ events: events })
+        return Ember.get(self.get('parentView.controller.dayViewClass')).create({ events: events, parentView: self.get('parentView') })
       }))
     }.observes('days')
   , init: function () {
@@ -192,7 +201,7 @@ Ember.Calendar.DayView = Ember.ContainerView.extend({
       $('#' + this.get('elementId')).html('')
       
       this.get('childViews').pushObjects(this.get('events').map(function (event) {
-        return Ember.get(self.get('parentView.parentView.controller.eventViewClass')).create({ event: event })
+        return Ember.get(self.get('parentView.controller.eventViewClass')).create({ event: event, parentView: self.get('parentView') })
       }))
     }.observes('events')
   , init: function () {
@@ -202,17 +211,17 @@ Ember.Calendar.DayView = Ember.ContainerView.extend({
 })
 
 Ember.Calendar.EventView = Ember.View.extend({
-    classNames: ['ember-calendar-event']
+    templateName: 'ember-calendar-event'
+  , classNames: ['ember-calendar-event']
   , attributeBindings: ['style']
   , style: function () {
       if (!this.get('event')) return ''
+      var start = moment(this.get('event.start')).valueOf()
+        , end = moment(this.get('event.end')).valueOf()
+        , rangeStart = moment(start).startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.controller.headingTimeRangeStart')
+        , rangeEnd = moment(start).startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.controller.headingTimeRangeEnd')
       
-      var start = moment(this.get('event.start'))
-        , end = moment(this.get('event.end'))
-        , rangeStart = start.clone().startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.parentView.parentView.headingTimeRangeStart')
-        , rangeEnd = start.clone().startOf('day').valueOf() + 1000 * 60 * 60 * this.get('parentView.parentView.parentView.headingTimeRangeEnd')
-      
-      return 'top: ' + (start - rangeStart) / (rangeEnd - rangeStart) + '%; height: ' + (end - start) / (rangeEnd - rangeStart) + '%;'
+      return 'top: ' + 100 * (start - rangeStart) / (rangeEnd - rangeStart) + '%; height: ' + 100 * (end - start) / (rangeEnd - rangeStart) + '%;'
     }.property('event', 'event.start', 'event.end')
   , nameString: function () {
       if (!this.get('event')) return ''
@@ -220,10 +229,10 @@ Ember.Calendar.EventView = Ember.View.extend({
     }.property('event', 'event.name')
   , timeString: function () {
       if (!this.get('event')) return ''
-      return this.get('event.start').format(this.get('parentView.parentView.parentView.controller.eventTimeFormat')) + this.get('parentView.parentView.parentView.controller.eventTimeSeparator') + this.get('event.end').format(this.get('parentView.parentView.parentView.controller.eventTimeFormat'))
+      return this.get('event.start').format(this.get('parentView.controller.eventTimeFormat')) + this.get('parentView.controller.eventTimeSeparator') + this.get('event.end').format(this.get('parentView.controller.eventTimeFormat'))
     }.property('event', 'event.start', 'event.end')
   , locationString: function () {
-      if (!this.get('event')) return ''
+      if (!this.get('event') || !this.get('event.location')) return ''
       return this.get('event.location.name') || this.get('event.location.address')
     }.property('event', 'event.location')
 })
