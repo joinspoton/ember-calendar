@@ -104,6 +104,7 @@ header {
 header ul {
   list-style:none;
   height:40px;
+  margin-top: 25px;
   
   padding:0;
   
@@ -181,4 +182,8 @@ footer {
   float:left;
   position:fixed;
   bottom:50px;
+}
+
+footer iframe {
+  margin-bottom: 20px;
 }
