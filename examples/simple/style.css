@@ -44,6 +44,7 @@
 }
 .ember-calendar-days {
   margin-left: 50px;
+  margin-right: 25px;
 }
 .ember-calendar-event {
   background: #f6f6f6;
