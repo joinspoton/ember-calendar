@@ -4,9 +4,11 @@
     {{view Ember.Calendar.HeadingDatesView datesBinding='controller.dates'}}
     <div class='ember-calendar-head-next'><button {{action loadNextWeek target='controller'}}>&raquo;</button></div>
   </div>
-  <div class='ember-calendar-body'>
-    {{view Ember.Calendar.HeadingTimesView timesBinding='controller.times'}}
-    {{view Ember.Calendar.DaysView daysBinding='controller.days'}}
+  <div class='ember-calendar-container'>
+    <div class='ember-calendar-body'>
+      {{view Ember.Calendar.HeadingTimesView timesBinding='controller.times'}}
+      {{view Ember.Calendar.DaysView daysBinding='controller.days'}}
+    </div>
   </div>
 </script>
 
@@ -19,7 +21,7 @@
 </script>
 
 <script type='text/x-handlebars' data-template-name='ember-calendar-event'>
-  <div class='ember-calendar-event-name'>{{nameString}}</div>
-  <div class='ember-calendar-event-time'>{{timeString}}</div>
-  <div class='ember-calendar-event-location'>{{locationString}}</div>
+  <div class='ember-calendar-event-name'>{{view.nameString}}</div>
+  <div class='ember-calendar-event-time'>{{view.timeString}}</div>
+  <div class='ember-calendar-event-location'>{{view.locationString}}</div>
 </script>
