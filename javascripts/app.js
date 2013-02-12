@@ -4,7 +4,7 @@
 App = Ember.Application.create()
 
 App.ApplicationController = Ember.Controller.extend({
-    needs: ['simpleCalendar', 'multitypeCalendar']
+    needs: ['simpleCalendar', 'multitypeCalendar', 'ajaxCalendar']
 })
 
 App.ApplicationView = Ember.View.extend({
@@ -59,6 +59,19 @@ App.SimpleCalendarController = Ember.Calendar.CalendarController.extend({
       
       return events
     }.property()
+})
+
+App.AjaxCalendarController = Ember.Calendar.CalendarController.extend({
+    content: []
+  , update: function () {
+      if (!this.get('week')) return
+      
+      var self = this
+      $.getJSON('http://ember-calendar-ajax.herokuapp.com', { week: self.get('week').toDate() }, function (response) {
+        if (!response) return
+        self.clear().pushObjects(response).notifyPropertyChange('content')
+      })
+    }.observes('week')
 })
 
 App.MultitypeCalendarController = Ember.Calendar.CalendarController.extend({
