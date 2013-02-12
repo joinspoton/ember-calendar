@@ -61,12 +61,33 @@ section > h3:nth-of-type(1) {
 }
 .ember-calendar-event-name {
   color: #333;
-  font-size: 13px;
-  line-height: 15px;
+  font-size: 14px;
+  line-height: 16px;
 }
-.ember-calendar-event-time, .ember-calendar-event-location {
+.ember-calendar-event-going,
+.ember-calendar-event-time,
+.ember-calendar-event-location {
   color: #999;
-  font-size: 11px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 14px;
   margin-bottom: 2px;
+}
+.ember-calendar-event.spoton {
+  background-color: #e03b59;
+  border-color: #e03b59;
+}
+.ember-calendar-event.facebook {
+  background-color: #8b9dc1;
+  border-color: #7b8db1;
+}
+.ember-calendar-event.spoton .ember-calendar-event-name,
+.ember-calendar-event.facebook .ember-calendar-event-name {
+  color: #fff;
+}
+.ember-calendar-event.spoton .ember-calendar-event-going,
+.ember-calendar-event.spoton .ember-calendar-event-time,
+.ember-calendar-event.spoton .ember-calendar-event-location,
+.ember-calendar-event.facebook .ember-calendar-event-time,
+.ember-calendar-event.facebook .ember-calendar-event-location {
+  color: rgba(255, 255, 255, 0.7);
 }
