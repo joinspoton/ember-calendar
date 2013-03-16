@@ -127,7 +127,7 @@ Ember.Calendar.HeadingDatesView = Ember.ContainerView.extend({
       this.removeAllChildren()
       $('#' + this.get('elementId')).html('')
       
-      this.get('childViews').pushObjects(this.get('dates').map(function (date) {
+      this.pushObjects(this.get('dates').map(function (date) {
         return Ember.get(self.get('parentView.controller.headingDateViewClass')).create({ date: date })
       }))
     }.observes('dates')
@@ -154,7 +154,7 @@ Ember.Calendar.HeadingTimesView = Ember.ContainerView.extend({
       this.removeAllChildren()
       $('#' + this.get('elementId')).html('')
       
-      this.get('childViews').pushObjects(this.get('times').map(function (time) {
+      this.pushObjects(this.get('times').map(function (time) {
         return Ember.get(self.get('parentView.controller.headingTimeViewClass')).create({ time: time })
       }))
     }.observes('times')
@@ -181,7 +181,7 @@ Ember.Calendar.DaysView = Ember.ContainerView.extend({
       this.removeAllChildren()
       $('#' + this.get('elementId')).html('')
       
-      this.get('childViews').pushObjects(this.get('days').map(function (events) {
+      this.pushObjects(this.get('days').map(function (events) {
         return Ember.get(self.get('parentView.controller.dayViewClass')).create({ events: events, parentView: self.get('parentView') })
       }))
     }.observes('days')
@@ -200,7 +200,7 @@ Ember.Calendar.DayView = Ember.ContainerView.extend({
       this.removeAllChildren()
       $('#' + this.get('elementId')).html('')
       
-      this.get('childViews').pushObjects(this.get('events').map(function (event) {
+      this.pushObjects(this.get('events').map(function (event) {
         return Ember.get(self.get('parentView.controller.eventViewClass')).create({ event: event, parentView: self.get('parentView') })
       }))
     }.observes('events')
