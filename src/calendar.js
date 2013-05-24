@@ -98,7 +98,7 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
   
   , init: function () {
       this._super()
-      this.set('week', moment(this.get('initialDate')).subtract('days', (moment(this.get('initialDate')).day() + 7 - this.get('startOfWeek')) % 7))
+      this.set('week', moment(this.get('initialDate')).subtract('days', (moment(this.get('initialDate')).day() + 7 - this.get('startOfWeek')) % 7).startOf('day'))
     }
 })
 
