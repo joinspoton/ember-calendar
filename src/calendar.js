@@ -53,6 +53,8 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
       var days = [[], [], [], [], [], [], []]
         , dates = this.get('dates')
         , self = this
+        , weekStart = dates[0].clone()
+        , weekEnd = dates[6].clone().endOf('day')
       
       this.get('content').forEach(function (event) {
         var start = moment(event.start).clone()
@@ -60,7 +62,7 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
           , object
           , day
         
-        if (end < dates[0] || start > dates[6])
+        if (end < weekStart || start > weekEnd)
           return
         
         while (end > start) {
@@ -77,6 +79,7 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
             object.end = end.clone()
           
           day = object.start.clone().startOf('day').diff(self.get('week'), 'days')
+
           if (day >= 0 && day <= 6)
             days[day].push(object)
           
