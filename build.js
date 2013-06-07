@@ -1,5 +1,7 @@
 require('shelljs/global')
 
+cd(__dirname)
+
 rm('-r', 'dist')
 mkdir('dist')
 
