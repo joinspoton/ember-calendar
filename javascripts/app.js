@@ -7,6 +7,12 @@ App.ApplicationController = Ember.Controller.extend({
     needs: ['simpleCalendar', 'multitypeCalendar', 'ajaxCalendar']
 })
 
+App.ApplicationRoute = Ember.Route.extend({
+    setupController: function () {
+      this.controllerFor('ajaxCalendar').update()
+    }
+})
+
 App.ApplicationView = Ember.View.extend({
     templateName: 'application'
 })
