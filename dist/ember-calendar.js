@@ -95,13 +95,15 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
       return days
     }.property('content', 'dates')
     
-  , loadPreviousWeek: function () {
-      this.get('week').subtract('days', 7)
-      this.notifyPropertyChange('week')
-    }
-  , loadNextWeek: function () {
-      this.get('week').add('days', 7)
-      this.notifyPropertyChange('week')
+  , actions: {
+        loadPreviousWeek: function () {
+          this.get('week').subtract('days', 7)
+          this.notifyPropertyChange('week')
+        }
+      , loadNextWeek: function () {
+          this.get('week').add('days', 7)
+          this.notifyPropertyChange('week')
+        }
     }
   
   , init: function () {
