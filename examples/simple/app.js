@@ -11,8 +11,6 @@ App.ApplicationView = Ember.View.extend({
     templateName: 'application'
 })
 
-App.initialize()
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Controller
