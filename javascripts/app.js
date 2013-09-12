@@ -1,21 +1,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Application
 ///////////////////////////////////////////////////////////////////////////////
-App = Ember.Application.create()
+App = Ember.Application.create();
 
 App.ApplicationController = Ember.Controller.extend({
     needs: ['simpleCalendar', 'multitypeCalendar', 'ajaxCalendar']
-})
+});
 
 App.ApplicationRoute = Ember.Route.extend({
     setupController: function () {
-      this.controllerFor('ajaxCalendar').update()
+      this.controllerFor('ajaxCalendar').update();
     }
-})
+});
 
 App.ApplicationView = Ember.View.extend({
     templateName: 'application'
-})
+});
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -23,20 +23,20 @@ App.ApplicationView = Ember.View.extend({
 ///////////////////////////////////////////////////////////////////////////////
 App.MultitypeEventView = Ember.Calendar.EventView.extend({
     templateName: function () {
-      return this.get('event.template') || 'ember-calendar-event'
+      return this.get('event.template') || 'ember-calendar-event';
     }.property('event.template')
   
   , classNameBindings: ['facebook', 'google', 'spoton']
   , spoton: function () {
-      return this.get('event.type') === 0
+      return this.get('event.type') === 0;
     }.property('event.type')
   , google: function () {
-      return this.get('event.type') === 1
+      return this.get('event.type') === 1;
     }.property('event.type')
   , facebook: function () {
-      return this.get('event.type') === 2
+      return this.get('event.type') === 2;
     }.property('event.type')
-})
+});
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,72 +44,76 @@ App.MultitypeEventView = Ember.Calendar.EventView.extend({
 ///////////////////////////////////////////////////////////////////////////////
 App.SimpleCalendarController = Ember.Calendar.CalendarController.extend({
     content: function () {
-      var events = []
-        , date
-        , time
-        , duration
+      var events = [];
+      var date;
+      var time;
+      var duration;
 
       for (var i = 0; i < 10; i++) {
-        date = Math.floor(Math.random() * 7)
-        time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24)
-        duration = 1000 * 60 * 30 * (1 + Math.floor(Math.random() * 5))
+        date = Math.floor(Math.random() * 7);
+        time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24);
+        duration = 1000 * 60 * 30 * (1 + Math.floor(Math.random() * 5));
         
         events.push({
             name: 'Event ' + events.length
           , start: moment().startOf('day').add('days', date - moment().day()).add('milliseconds', time)
           , end: moment().startOf('day').add('days', date - moment().day()).add('milliseconds', time + duration)
-        })
+        });
       }
       
-      return events
+      return events;
     }.property()
-})
+});
 
 App.AjaxCalendarController = Ember.Calendar.CalendarController.extend({
     content: []
   , update: function () {
-      if (!this.get('week')) return
+      if (!this.get('week')) {
+        return;
+      }
       
-      var self = this
+      var self = this;
       $.getJSON('http://ember-calendar-ajax.herokuapp.com', { week: self.get('week').toDate() }, function (response) {
-        if (!response) return
-        self.clear().pushObjects(response).notifyPropertyChange('content')
-      })
+        if (!response) {
+          return;
+        }
+        self.clear().pushObjects(response).notifyPropertyChange('content');
+      });
     }.observes('week')
-})
+});
 
 App.MultitypeCalendarController = Ember.Calendar.CalendarController.extend({
     content: function () {
-      var events = []
-        , date
-        , time
-        , duration
-        , event
-        , type
+      var events = [];
+      var date;
+      var time;
+      var duration;
+      var event;
+      var type;
 
       for (var i = 0; i < 10; i++) {
-        date = Math.floor(Math.random() * 7)
-        time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24)
-        duration = 1000 * 60 * 30 * (3 + Math.floor(Math.random() * 5))
+        date = Math.floor(Math.random() * 7);
+        time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24);
+        duration = 1000 * 60 * 30 * (3 + Math.floor(Math.random() * 5));
         
         event = {
             name: 'Event ' + events.length
           , start: moment().startOf('day').add('days', date - moment().day()).add('milliseconds', time)
           , end: moment().startOf('day').add('days', date - moment().day()).add('milliseconds', time + duration)
           , type: Math.floor(Math.random() * 3) // 0 = spoton, 1 = google, 2 = facebook
-        }
+        };
         
         // add unique properties for spoton type 
         if (event.type === 0) {
-          event.numGoing = Math.floor(Math.random() * 100)
-          event.template = 'multitype-event-spoton'
+          event.numGoing = Math.floor(Math.random() * 100);
+          event.template = 'multitype-event-spoton';
         }
         
-        events.push(event)
+        events.push(event);
       }
       
-      return events
+      return events;
     }.property()
     
   , eventViewClass: 'App.MultitypeEventView'
-})
+});
