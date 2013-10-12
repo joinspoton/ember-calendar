@@ -19,7 +19,7 @@ App.EventView = Ember.Calendar.EventView.extend({
     templateName: function () {
       return this.get('event.template') || 'ember-calendar-event';
     }.property('event.template')
-  
+    
   , classNameBindings: ['facebook', 'google', 'spoton']
   , spoton: function () {
       return this.get('event.type') === 0;
@@ -43,8 +43,7 @@ App.CalendarController = Ember.Calendar.CalendarController.extend({
       var time;
       var duration;
       var event;
-      var type;
-
+      
       for (var i = 0; i < 15; i++) {
         date = Math.floor(Math.random() * 7);
         time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24);
@@ -57,7 +56,7 @@ App.CalendarController = Ember.Calendar.CalendarController.extend({
           , type: Math.floor(Math.random() * 3) // 0 = spoton, 1 = google, 2 = facebook
         };
         
-        // add unique properties for spoton type 
+        // add unique properties for spoton type
         if (event.type === 0) {
           event.numGoing = Math.floor(Math.random() * 100);
           event.template = 'ember-calendar-event-spoton';

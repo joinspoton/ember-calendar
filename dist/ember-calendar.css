@@ -1,4 +1,4 @@
-/* ember-calendar (https://github.com/joinspoton/ember-calendar) | (c) 2013 SpotOn (https://spoton.it) | http://www.opensource.org/licenses/MIT */
+/* ember-calendar 1.0.0 (https://github.com/joinspoton/ember-calendar) | (c) 2013 SpotOn (https://spoton.it) | http://www.opensource.org/licenses/MIT */
 /* All of these selectors + properties are required.
    You shouldn't have to customize any of them. */
 
@@ -20,7 +20,7 @@
 .ember-calendar-head-date {
   display: inline-block;
   text-align: center;
-  width: 14.2857142857%;
+  width: 100%;
   vertical-align: top;
 }
 .ember-calendar-container {
@@ -47,9 +47,16 @@
   height: 100%;
   position: relative;
   text-align: center;
-  width: 14.2857142857%;
+  width: 100%;
   vertical-align: top;
 }
 .ember-calendar-event {
   position: absolute;
+  width: 100%;
+}
+.ember-calendar-head-week-date {
+  width: 14.2857142857%;
+}
+.ember-calendar-week-day {
+  width: 14.2857142857%;
 }

@@ -16,14 +16,28 @@ App.ApplicationView = Ember.View.extend({
 // Controller
 ///////////////////////////////////////////////////////////////////////////////
 App.CalendarController = Ember.Calendar.CalendarController.extend({
-    content: function () {
+    states: ['day', 'week']
+  , initialState: 'day'
+  , content: function () {
       var events = [];
       var date;
       var time;
       var duration;
+      var i;
       
-      for (var i = 0; i < 10; i++) {
-        date = Math.floor(Math.random() * 7);
+      for (i = 0; i < 3; i++) {
+        time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24);
+        duration = 1000 * 60 * 30 * (1 + Math.floor(Math.random() * 5));
+        
+        events.push({
+            name: 'Event ' + events.length
+          , start: moment().startOf('day').add('milliseconds', time)
+          , end: moment().startOf('day').add('milliseconds', time + duration)
+        });
+      }
+      
+      for (i = 0; i < 45; i++) {
+        date = Math.floor(Math.random() * 21) - 7;
         time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24);
         duration = 1000 * 60 * 30 * (1 + Math.floor(Math.random() * 5));
         
