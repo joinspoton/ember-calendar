@@ -1,23 +1,22 @@
 {
     "name": "ember-calendar"
-  , "version": "0.1.0"
-  , "homepage": "http://joinspoton.github.io/ember-calendar/"
-  , "authors": ["SpotOn <founders@spotonit>"]
   , "description": "Calendar component for Ember.js."
+  , "version": "1.0.0"
+  , "keywords": ["ember", "calendar"]
+  , "homepage": "http://joinspoton.github.io/ember-calendar/"
+  , "authors": ["SpotOn <founders@spoton.it>"]
   , "main": [
         "dist/ember-calendar.css"
-      , "dist/ember-calendar.js"
       , "dist/ember-calendar.min.css"
+      , "dist/ember-calendar.js"
+      , "dist/ember-calendar.pre.js"
       , "dist/ember-calendar.min.js"
-    ]
-  , "keywords": [
-        "calendar"
-      , "emberjs"
-      , "component"
+      , "dist/ember-calendar.pre.min.js"
     ]
   , "dependencies": {
-        "ember": "latest"
-      , "moment": "latest"
+        "jquery": ">=1.10.2"
+      , "ember": "~1.0.0"
+      , "moment": "~2.2.1"
     }
   , "license": "MIT"
   , "ignore": [
