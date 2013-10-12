@@ -1,4 +1,11 @@
-Calendar component for Ember.js.
+Calendar component for Ember.js. http://joinspoton.github.io/ember-calendar/
+
+---
+
+Building:
+
+    $ npm install csso@~1.3.8 ember-handlebars@~1.0.0 shelljs@~0.2.6 uglify-js@~2.4.0
+    $ node build.js
 
 ---
 
