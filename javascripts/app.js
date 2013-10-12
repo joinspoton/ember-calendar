@@ -4,7 +4,7 @@
 App = Ember.Application.create();
 
 App.ApplicationController = Ember.Controller.extend({
-    needs: ['simpleCalendar', 'multitypeCalendar', 'ajaxCalendar']
+    needs: ['convertibleCalendar', 'multitypeCalendar', 'ajaxCalendar']
 });
 
 App.ApplicationRoute = Ember.Route.extend({
@@ -25,7 +25,7 @@ App.MultitypeEventView = Ember.Calendar.EventView.extend({
     templateName: function () {
       return this.get('event.template') || 'ember-calendar-event';
     }.property('event.template')
-  
+    
   , classNameBindings: ['facebook', 'google', 'spoton']
   , spoton: function () {
       return this.get('event.type') === 0;
@@ -42,15 +42,18 @@ App.MultitypeEventView = Ember.Calendar.EventView.extend({
 ///////////////////////////////////////////////////////////////////////////////
 // Controllers
 ///////////////////////////////////////////////////////////////////////////////
-App.SimpleCalendarController = Ember.Calendar.CalendarController.extend({
-    content: function () {
+App.ConvertibleCalendarController = Ember.Calendar.CalendarController.extend({
+    states: ['day', 'week']
+  , initialState: 'week'
+  , content: function () {
       var events = [];
       var date;
       var time;
       var duration;
-
-      for (var i = 0; i < 10; i++) {
-        date = Math.floor(Math.random() * 7);
+      var i;
+      
+      for (i = 0; i < 45; i++) {
+        date = Math.floor(Math.random() * 21) - 7;
         time = 1000 * 60 * 60 * 8 + 1000 * 60 * 30 * Math.floor(Math.random() * 24);
         duration = 1000 * 60 * 30 * (1 + Math.floor(Math.random() * 5));
         
@@ -68,15 +71,11 @@ App.SimpleCalendarController = Ember.Calendar.CalendarController.extend({
 App.AjaxCalendarController = Ember.Calendar.CalendarController.extend({
     content: []
   , update: function () {
-      if (!this.get('week')) {
-        return;
-      }
+      if (!this.get('week')) { return; }
       
       var self = this;
       $.getJSON('http://ember-calendar-ajax.herokuapp.com', { week: self.get('week').toDate() }, function (response) {
-        if (!response) {
-          return;
-        }
+        if (!response) { return; }
         self.clear().pushObjects(response).notifyPropertyChange('content');
       });
     }.observes('week')

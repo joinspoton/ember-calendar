@@ -6,6 +6,10 @@ section > h3:nth-of-type(1) {
   margin-top: 0px;
 }
 
+section > div:nth-of-type(1) {
+  margin-top: -23px;
+}
+
 .ember-calendar {
   border: 1px solid #ddd;
   font-family: 'myriad-pro', 'Myriad Pro', 'Calibri', 'Helvetica', 'Trebuchet MS', 'Verdana', sans-serif;
@@ -90,4 +94,23 @@ section > h3:nth-of-type(1) {
 .ember-calendar-event.facebook .ember-calendar-event-time,
 .ember-calendar-event.facebook .ember-calendar-event-location {
   color: rgba(255, 255, 255, 0.7);
+}
+.ember-calendar-buttons {
+  text-align: right;
+  width: 702px;
+}
+.ember-calendar-buttons > button {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 0px;
+  margin-left: 5px;
+  outline: none;
+  padding: 5px 10px 4px;
+}
+.ember-calendar-buttons > button.ember-calendar-button-active {
+  background: #ddd;
 }

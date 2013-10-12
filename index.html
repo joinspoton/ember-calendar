@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>ember-calendar by SpotOn</title>
+    <title>ember-calendar</title>
     <link rel="stylesheet" href="stylesheets/theme.css">
     <link rel="stylesheet" href="stylesheets/ember-calendar.css">
     <link rel="stylesheet" href="stylesheets/style.css">
@@ -27,8 +27,8 @@
         </header>
         
         <section>
-          <h3>Simple calendar <a href='https://github.com/joinspoton/ember-calendar/tree/master/examples/simple', target='_blank'>(source)</a></h3>
-          {{view Ember.Calendar.CalendarView controllerBinding='controllers.simpleCalendar'}}
+          <h3>Simple calendar with view switching <a href='https://github.com/joinspoton/ember-calendar/tree/master/examples/convertible', target='_blank'>(source)</a></h3>
+          {{view Ember.Calendar.CalendarView controllerBinding='controllers.convertibleCalendar'}}
           
           <h3>Simple calendar with AJAX <a href='https://github.com/joinspoton/ember-calendar/tree/master/examples/ajax', target='_blank'>(source)</a></h3>
           {{view Ember.Calendar.CalendarView controllerBinding='controllers.ajaxCalendar'}}
@@ -37,8 +37,8 @@
           {{view Ember.Calendar.CalendarView controllerBinding='controllers.multitypeCalendar'}}
           
           <h3>Dependencies</h3>
-          <a href="http://emberjs.com/">Ember.js</a>, <a href="http://momentjs.com/">Moment.js</a>
-            
+          <p><a href="http://jquery.com/">jQuery</a>, <a href="http://emberjs.com/">Ember.js</a>, <a href="http://momentjs.com/">Moment.js</a>
+          
           <h3>Contributors</h3>
           <p><a href="https://github.com/charlesfeng">charlesfeng</a>, <a href="https://github.com/tkazec">tkazec</a><br><a href="https://github.com/tennety">tennety</a>, <a href="https://github.com/RussTheAerialist">RussTheAerialist</a></p>
         </section>
@@ -46,11 +46,11 @@
         <footer>
           <iframe src="http://ghbtns.com/github-btn.html?user=joinspoton&repo=ember-calendar&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
           <iframe src="http://ghbtns.com/github-btn.html?user=joinspoton&repo=ember-calendar&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
-          <p>This project is maintained by <a href="https://spoton.it">SpotOn</a>.</p>
+          <p>This project is maintained by<br><a href="https://github.com/charlesfeng">charlesfeng</a> and <a href="https://github.com/tkazec">tkazec</a> at <a href="https://spoton.it">SpotOn</a>.</p>
           <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
         </footer>
       </div>
-    
+      
     </script>
     
     <script type='text/x-handlebars' data-template-name='multitype-event-spoton'>
