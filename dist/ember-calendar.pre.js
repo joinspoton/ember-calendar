@@ -51,11 +51,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Calendar.HeadingTimesView", {hash:{
     'timesBinding': ("controller.times")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n      <div class='ember-calendar-days'>\n      ");
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "controller.day.length", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n        ");
+  data.buffer.push("\n      <div class='ember-calendar-days'>\n        ");
   hashContexts = {'eventsBinding': depth0};
   hashTypes = {'eventsBinding': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Calendar.DayView", {hash:{
