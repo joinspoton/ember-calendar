@@ -15,7 +15,6 @@
     <div class='ember-calendar-body'>
       {{view Ember.Calendar.HeadingTimesView timesBinding='controller.times'}}
       <div class='ember-calendar-days'>
-      {{controller.day.length}}
         {{view Ember.Calendar.DayView eventsBinding='controller.day'}}
       </div>
     </div>
