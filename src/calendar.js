@@ -63,7 +63,7 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
       var dayEnd = this.get('date').clone().endOf('day');
       
       this.get('content').filter(function (event) {
-        return event.end > dayStart && event.start <= dayEnd;
+        return dayStart.diff(event.end) <= 0 && dayEnd.diff(event.start) >= 0;
       }).forEach(function (event) {
         var object = {};
         
