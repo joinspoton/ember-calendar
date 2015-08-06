@@ -73,8 +73,9 @@ Ember.Calendar.CalendarController = Ember.ArrayController.extend({
           }
         });
         
-        object.start = moment(event.start);
+        object.start = moment(dayStart).startOf('day');
         object.end = moment(dayEnd).endOf('day');
+        if (object.start < event.start) { object.start = moment(event.start); }
         if (object.end > event.end) { object.end = moment(event.end); }
         
         day.push(object);
